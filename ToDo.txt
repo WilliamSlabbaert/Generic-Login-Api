@@ -1,4 +1,6 @@
-- Implement Hashing service
+- Implement Hashing service [x]
 - Registering service
 - Auth0
 - App Type link to account 
+
+- Front-end (Blazor or Vue js)

@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Dto_s;
+using BusinessLayer.Helpers;
 using BusinessLayer.Services.Interfaces;
 using DataLayer.Repo.Interfaces;
 
@@ -14,8 +15,19 @@ namespace BusinessLayer.Services
         }
         public async Task<bool> Login(LoginCredentialsDTO dto)
         {
-            var response = await _repo.Get(dto.Username, dto.Password);
-            return response is not null;
+
+            try
+            {
+                var response = await _repo.Get(dto.Username, dto.Password);
+                var hash = response.Password.Hash();
+
+                return response.Password.Verify(hash.SaltHex, hash.Hash);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
