@@ -14,10 +14,18 @@ namespace Generic_Login_Api.Controllers
             _service = service;
         }
         [HttpGet("/Login")]
-        public IActionResult Login([FromBody] LoginCredentialsDTO credentials)
+        public async Task<IActionResult> Login([FromBody] LoginCredentialsDTO credentials)
         {
-            var response = _service.Login(credentials);
-            return Ok(response);
+            try
+            {
+                var response = await _service.Login(credentials);
+
+                return response ? Ok() : Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

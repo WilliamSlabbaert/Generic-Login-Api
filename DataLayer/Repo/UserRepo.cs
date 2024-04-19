@@ -1,4 +1,6 @@
-﻿using DataLayer.Repo.Interfaces;
+﻿using DataLayer.Entities;
+using DataLayer.Repo.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Repo
 {
@@ -10,9 +12,20 @@ namespace DataLayer.Repo
             this._context = context;
         }
 
-        public void Get()
+        public async Task<IEnumerable<User>> Get()
         {
-            var items = this._context.Users.ToList();
+            var items = await this._context.Users.ToListAsync();
+            return items;
+        }
+        public async Task<User> Get(int Id)
+        {
+            var item = await this._context.Users.FirstOrDefaultAsync(s => s.Id == Id);
+            return item;
+        }
+        public async Task<User> Get(string username, string password)
+        {
+            var item = await this._context.Users.FirstOrDefaultAsync(s => s.Username == username && s.Password == password);
+            return item;
         }
     }
 }

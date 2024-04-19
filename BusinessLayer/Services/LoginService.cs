@@ -12,10 +12,10 @@ namespace BusinessLayer.Services
         {
             _repo = repo;
         }
-        public string Login(LoginCredentialsDTO dto)
+        public async Task<bool> Login(LoginCredentialsDTO dto)
         {
-            _repo.Get();
-            return "test";
+            var response = await _repo.Get(dto.Username, dto.Password);
+            return response is not null;
         }
     }
 }

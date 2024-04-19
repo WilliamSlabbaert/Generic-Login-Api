@@ -4,6 +4,6 @@ namespace BusinessLayer.Services.Interfaces
 {
     public interface ILoginService
     {
-        string Login(LoginCredentialsDTO dto);
+        Task<bool> Login(LoginCredentialsDTO dto);
     }
 }
