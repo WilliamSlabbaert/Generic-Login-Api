@@ -1,0 +1,4 @@
+- Implement Hashing service
+- Registering service
+- Auth0
+- App Type link to account 
