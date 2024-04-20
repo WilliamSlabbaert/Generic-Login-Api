@@ -14,7 +14,6 @@ namespace Generic_Login_Api.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-
             try
             {
                 await CreateResponse(context);

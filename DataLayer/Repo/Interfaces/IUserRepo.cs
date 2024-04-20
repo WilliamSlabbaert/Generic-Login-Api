@@ -1,4 +1,5 @@
 ﻿using DataLayer.Entities;
+using DataLayer.HelperModels;
 
 namespace DataLayer.Repo.Interfaces
 {
@@ -6,6 +7,8 @@ namespace DataLayer.Repo.Interfaces
     {
         Task<IEnumerable<User>> Get();
         Task<User> Get(int Id);
-        Task<User> Get(string username, string password);
+        Task<User> Get(Credentials credentials);
+
+        Task Add(RegisterCredentials registerCredentials);
     }
 }
