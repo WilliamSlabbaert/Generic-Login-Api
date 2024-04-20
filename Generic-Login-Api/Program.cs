@@ -3,6 +3,7 @@ using BusinessLayer.Services.Interfaces;
 using DataLayer;
 using DataLayer.Repo;
 using DataLayer.Repo.Interfaces;
+using Generic_Login_Api.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,14 +19,18 @@ builder.Services.AddScoped<ILoginService, LoginService>();
 
 builder.Services.AddControllers();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseMiddleware<ResponseMiddleware>();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();

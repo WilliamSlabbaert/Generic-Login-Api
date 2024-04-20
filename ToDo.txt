@@ -1,4 +1,5 @@
 - Implement Hashing service [x]
+- Response Object + middleware
 - Registering service
 - Auth0
 - App Type link to account 
