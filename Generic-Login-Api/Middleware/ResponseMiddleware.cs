@@ -42,10 +42,11 @@ namespace Generic_Login_Api.Middleware
                 using (var bufferReader = new StreamReader(buffer))
                 {
                     string body = await bufferReader.ReadToEndAsync();
+                    var code = context.Response.StatusCode;
 
                     context.Response.Clear();
 
-                    context.Response.StatusCode = isException ? (int)HttpStatusCode.InternalServerError : context.Response.StatusCode;
+                    context.Response.StatusCode = isException ? (int)HttpStatusCode.InternalServerError : code;
 
 
                     var jsonString = await CreateResponseObject(body, (HttpStatusCode)context.Response.StatusCode);

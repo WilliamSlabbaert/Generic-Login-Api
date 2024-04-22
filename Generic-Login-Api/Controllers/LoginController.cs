@@ -28,5 +28,19 @@ namespace Generic_Login_Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost("/Register")]
+        public async Task<IActionResult> Register([FromBody] LoginCredentialsDTO credentials)
+        {
+            try
+            {
+                await _service.Register(credentials);
+
+                return Ok("Het is ok");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

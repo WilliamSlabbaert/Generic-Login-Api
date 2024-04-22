@@ -25,9 +25,7 @@ namespace BusinessLayer.Helpers
         internal static bool Verify(this string credential, string salt, string hash)
         {
             var computedHash = credential.Hash(Convert.FromHexString(salt)).Hash;
-
             return computedHash == hash;
-
         }
     }
     internal class HashResponse

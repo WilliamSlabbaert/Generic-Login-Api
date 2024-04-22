@@ -1,5 +1,4 @@
 ﻿using DataLayer.Entities;
-using DataLayer.HelperModels;
 using DataLayer.Repo.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,8 +6,8 @@ namespace DataLayer.Repo
 {
     public class UserRepo : IUserRepo
     {
-        private MySqlDataContext _context;
-        private DbSet<User> _userSet;
+        private readonly MySqlDataContext _context;
+        private readonly DbSet<User> _userSet;
         public UserRepo(MySqlDataContext context)
         {
             this._context = context;
@@ -24,15 +23,16 @@ namespace DataLayer.Repo
             var item = await this._userSet.FirstOrDefaultAsync(s => s.Id == Id);
             return item;
         }
-        public async Task<User> Get(Credentials credentials)
+        public async Task<User> Get(string username)
         {
-            var item = await this._userSet.FirstOrDefaultAsync(s => s.Username == credentials.Username && s.Password == credentials.Password);
+            var item = await this._userSet.FirstOrDefaultAsync(s => s.Username == username);
             return item;
         }
 
-        public Task Add(RegisterCredentials registerCredentials)
+        public async Task Add(User user)
         {
-            throw new NotImplementedException();
+            await this._userSet.AddAsync(user);
+            await _context.SaveChangesAsync();
         }
     }
 }
