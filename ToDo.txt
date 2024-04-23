@@ -1,7 +1,13 @@
 - Implement Hashing service [x]
 - Response Object + middleware [x]
-- Register service
+- Register service [x]
+- Connection String in appsettings [x]
+
 - Auth0
-- App Type link to account 
 
 - Front-end (Blazor or Vue js)
+- App Type link to account 
+
+(Optional)
+- Validation password
+

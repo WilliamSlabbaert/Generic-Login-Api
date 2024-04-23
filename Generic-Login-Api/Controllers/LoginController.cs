@@ -20,8 +20,8 @@ namespace Generic_Login_Api.Controllers
             {
                 var response = await _service.Login(credentials);
 
-                return response ? Ok("Het is ok")
-                    : Unauthorized("No account found");
+                return response ? Ok("Logged in.")
+                    : Unauthorized("No account found.");
             }
             catch (Exception ex)
             {
@@ -35,7 +35,7 @@ namespace Generic_Login_Api.Controllers
             {
                 await _service.Register(credentials);
 
-                return Ok("Het is ok");
+                return Ok("Registered");
             }
             catch (Exception ex)
             {

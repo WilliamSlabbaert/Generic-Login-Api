@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var cString = "Server=localhost;port=3306;Database=generic-authenticator;Uid=root;Pwd=coolmen15;";
+var configuration = builder.Configuration;
+var connectionString = configuration.GetConnectionString("MySqlDatabase");
+
 builder.Services.AddDbContext<MySqlDataContext>(options =>
-    options.UseMySql(cString, ServerVersion.AutoDetect(cString))
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
 );
 
 builder.Services.AddScoped<IUserRepo, UserRepo>();

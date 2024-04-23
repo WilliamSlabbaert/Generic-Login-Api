@@ -32,8 +32,7 @@ namespace BusinessLayer.Services
         {
             try
             {
-                var userEntity = await _repo.Get(dto.Username);
-                if (userEntity == null)
+                if (await CheckUserExists(dto.Username))
                 {
                     var hashReponse = dto.Password.Hash();
                     var registerDto = MappingHelper.CredentialDtoMapper(dto, hashReponse.SaltHex);
@@ -50,6 +49,12 @@ namespace BusinessLayer.Services
             {
                 throw ex;
             }
+        }
+
+        private async Task<bool> CheckUserExists(string username)
+        {
+            var userEntity = await _repo.Get(username);
+            return userEntity == null;
         }
     }
 }
