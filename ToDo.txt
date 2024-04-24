@@ -3,7 +3,10 @@
 - Register service [x]
 - Connection String in appsettings [x]
 
-- Auth0
+- JWT [x]
+	- Jwt credentials somewhere safe
+	- Valid credentials
+
 
 - Front-end (Blazor or Vue js)
 - App Type link to account 
