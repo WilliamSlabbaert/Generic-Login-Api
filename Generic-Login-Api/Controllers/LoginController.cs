@@ -1,8 +1,8 @@
 ﻿using BusinessLayer.Dto_s;
 using BusinessLayer.Services.Interfaces;
-using Generic_Login_Api.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Generic_Login_Api.Controllers
 {
@@ -23,8 +23,7 @@ namespace Generic_Login_Api.Controllers
             try
             {
                 var response = await _service.Login(credentials);
-
-                return response ? Ok(JwtTokenHelper.GetJwtToken(_config))
+                return !response.IsNullOrEmpty() ? Ok(response)
                     : Unauthorized("No account found.");
             }
             catch (Exception ex)

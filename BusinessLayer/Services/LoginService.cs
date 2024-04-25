@@ -2,6 +2,7 @@
 using BusinessLayer.Helpers;
 using BusinessLayer.Services.Interfaces;
 using DataLayer.Repo.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 
 namespace BusinessLayer.Services
@@ -9,18 +10,26 @@ namespace BusinessLayer.Services
     public class LoginService : ILoginService
     {
         private IUserRepo _repo;
-        public LoginService(IUserRepo repo)
+        private IConfiguration _configuration;
+        public LoginService(IUserRepo repo, IConfiguration configuration)
         {
             _repo = repo;
+            _configuration = configuration;
         }
-        public async Task<bool> Login(LoginCredentialsDTO dto)
+        public async Task<string?> Login(LoginCredentialsDTO dto)
         {
             try
             {
+                if (await CheckUserExists(dto.Username))
+                {
+                    return null;
+                }
                 var response = await _repo.Get(dto.Username);
                 var result = dto.Password.Verify(response.SaltHex, response.Password);
 
-                return result;
+                var token = _configuration.GetJwtToken("User-Management");
+
+                return result ? token : null;
             }
             catch (Exception ex)
             {
@@ -50,7 +59,6 @@ namespace BusinessLayer.Services
                 throw ex;
             }
         }
-
         private async Task<bool> CheckUserExists(string username)
         {
             var userEntity = await _repo.Get(username);
