@@ -4,8 +4,8 @@
 - Connection String in appsettings [x]
 
 - JWT [x]
-	- Jwt credentials somewhere safe
-	- Valid credentials
+	- Jwt credentials somewhere safe [x]
+	- Valid credentials [x]
 
 
 - Front-end (Blazor or Vue js)

@@ -33,8 +33,8 @@ builder.Services.AddAuthentication(option =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = "ValidIssuerHere",
-        ValidAudience = "ValidIssuerHere",
+        ValidIssuer = "Central-Login",
+        ValidAudience = "User-Management",
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["MY_KEY"])),
     };
 });
