@@ -18,46 +18,34 @@ namespace BusinessLayer.Services
         }
         public async Task<string?> Login(LoginCredentialsDTO dto)
         {
-            try
+            if (await CheckUserExists(dto.Username))
             {
-                if (await CheckUserExists(dto.Username))
-                {
-                    return null;
-                }
-                var response = await _repo.Get(dto.Username);
-                var result = dto.Password.Verify(response.SaltHex, response.Password);
-
-                var token = _configuration.GetJwtToken("User-Management");
-
-                return result ? token : null;
+                return null;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var response = await _repo.Get(dto.Username);
+            var result = dto.Password.Verify(response.SaltHex, response.Password);
+
+            var token = _configuration.GetJwtToken("User-Management");
+
+            return result ? token : null;
         }
 
         public async Task Register(LoginCredentialsDTO dto)
         {
-            try
-            {
-                if (await CheckUserExists(dto.Username))
-                {
-                    var hashReponse = dto.Password.Hash();
-                    var registerDto = MappingHelper.CredentialDtoMapper(dto, hashReponse.SaltHex);
-                    var user = MappingHelper.UserMapper(registerDto, hashReponse.Hash);
 
-                    await _repo.Add(user);
-                }
-                else
-                {
-                    throw new Exception("Account already exsists");
-                }
-            }
-            catch (Exception ex)
+            if (await CheckUserExists(dto.Username))
             {
-                throw ex;
+                var hashReponse = dto.Password.Hash();
+                var registerDto = MappingHelper.CredentialDtoMapper(dto, hashReponse.SaltHex);
+                var user = MappingHelper.UserMapper(registerDto, hashReponse.Hash);
+
+                await _repo.Add(user);
             }
+            else
+            {
+                throw new Exception("Account already exsists");
+            }
+
         }
         private async Task<bool> CheckUserExists(string username)
         {
