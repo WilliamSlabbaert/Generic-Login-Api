@@ -12,8 +12,8 @@ namespace Generic_Login_Api.Helpers
             var keyCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var Sectoken = new JwtSecurityToken(
-              issuer: "ValidIssuerHere",
-              audience: "ValidIssuerHere",
+              issuer: "Central-Login",
+              audience: "User-Management",
               null,
               expires: DateTime.Now.AddMinutes(120),
               signingCredentials: keyCredentials);
