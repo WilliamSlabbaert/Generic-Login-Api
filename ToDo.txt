@@ -12,5 +12,5 @@
 - App Type link to account 
 
 (Optional)
-- Validation password
+- Validation password [x] 
 
