@@ -18,7 +18,7 @@ namespace BusinessLayer.Services
         }
         public async Task<string?> Login(LoginCredentialsDTO dto)
         {
-            if (await CheckUserExists(dto.Username))
+            if (!await CheckUserExists(dto.Username))
             {
                 return null;
             }
@@ -33,7 +33,7 @@ namespace BusinessLayer.Services
         public async Task Register(LoginCredentialsDTO dto)
         {
 
-            if (await CheckUserExists(dto.Username))
+            if (!await CheckUserExists(dto.Username))
             {
                 var hashReponse = dto.Password.Hash();
                 var registerDto = MappingHelper.CredentialDtoMapper(dto, hashReponse.SaltHex);
@@ -50,7 +50,7 @@ namespace BusinessLayer.Services
         private async Task<bool> CheckUserExists(string username)
         {
             var userEntity = await _repo.Get(username);
-            return userEntity == null;
+            return userEntity != null;
         }
     }
 }
